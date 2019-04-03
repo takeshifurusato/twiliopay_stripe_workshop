@@ -16,6 +16,7 @@ $(function() {
         console.log('key', item.key);
         console.log('JSON data', item.value);
         $('#CallSid').html(item.key);
+        $('#PaymentConfirmationCode').html(item.value.PaymentConfirmationCode);
         $('#PhoneNumber').html(item.value.PhoneNumber);
         $('#Status').html(item.value.Status);
         $('#PaymentCardNumber').val(item.value.PaymentCardNumber);

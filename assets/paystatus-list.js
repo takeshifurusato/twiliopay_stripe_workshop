@@ -6,14 +6,21 @@ $(function() {
         console.log("updateList.");
         syncMap.getItems()
         .then(function(page) {
-            $('#callList').html('');
             $.each(page.items, function(i, item){
                 style = '';
                 if(item.value.Status === 'Error')     style='list-group-item-danger';
                 if(item.value.Status === 'Completed') style='list-group-item-success';
                 if(item.value.Status === 'Busy')      style='list-group-item-info';
-                status = '<a target="_blank" class="list-group-item '+style+'" href="./paystatus.html?callsid='+item.key+'">'+item.key+'</a>';
-                $('#callList').append(status);                
+
+                if($('#'+item.key).length){
+                    $('#'+item.key).removeClass('list-group-item-danger');
+                    $('#'+item.key).removeClass('list-group-item-success');
+                    $('#'+item.key).removeClass('list-group-item-info');
+                    $('#'+item.key).addClass(style);
+                }else{
+                    status = '<a id="'+item.key+'"class="list-group-item '+style+'" href="./paystatus.html?callsid='+item.key+'">'+item.key+'</a>';
+                    $('#callList').append(status);                
+                }
                 console.log('show first item', i, item.key, item.value);                
             });
         });
