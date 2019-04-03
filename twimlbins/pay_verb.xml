@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Response>
+  <Say language="ja-JP" voice="Polly.Mizuki">こんにちは。クレジットカード決済にようこそ。料金は100円です。</Say>   
+  <Pay chargeAmount="100" currency='jpy' action="[stripe-result用FunctionのURL]" postalCode="false" paymentConnector="stripe_test" statusCallback="[pay-status用FunctionのURL]" >
+    <Prompt for="payment-card-number">
+      <Say language="ja-JP" voice="Polly.Mizuki">クレジットカード番号を入力してください。</Say>
+    </Prompt>    
+    <Prompt for="expiration-date">
+      <Say language="ja-JP" voice="Polly.Mizuki">有効期限を、月と年のそれぞれ2桁の数字で入力してください。</Say>
+    </Prompt>    
+    <Prompt for="security-code">
+      <Say language="ja-JP" voice="Polly.Mizuki">セキュリティーコードを入力してください。カードの裏に記載されています。</Say>
+    </Prompt> 
+  </Pay>
+</Response>
