@@ -1,20 +1,54 @@
-let syncDoc, syncClient;
+let syncMap, syncClient;
 
 $(function() {
-    
+
+    var getParam = function (name, url) {
+        if (!url) url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    };
+
+    var updateStatus = function (item) {
+        console.log('key', item.key);
+        console.log('JSON data', item.value);
+        $('#CallSid').html(item.key);
+        $('#PhoneNumber').html(item.value.PhoneNumber);
+        $('#Status').html(item.value.Status);
+        $('#PaymentCardNumber').val(item.value.PaymentCardNumber);
+        $('#ExpirationDate').val(item.value.ExpirationDate);
+        $('#SecurityCode').val(item.value.SecurityCode);
+    };
+
+    callsid = getParam('callsid');
+    console.log(callsid);
+
     $.getJSON('../pay-status-sync-token', function (tokenResponse) {
         syncClient = new Twilio.Sync.Client(tokenResponse.token, { logLevel: 'info' });
-        syncClient.document('PayStatus')
-        .then(function(doc) {
-            syncDoc = doc;
-            syncDoc.on('updated', event => {
-                console.log("Sync updated.");
-                console.log(event);
-                $('#PaymentCardNumber').val(event.value.PaymentCardNumber);
-                $('#ExpirationDate').val(event.value.ExpirationDate);
-                $('#SecurityCode').val(event.value.SecurityCode);
-                $('#Status').html(event.value.Status);
+
+        syncClient.map('PayStatus')
+        .then(function(map) {
+            syncMap = map;
+            syncMap.on('itemUpdated', function(o) {
+                console.log("Sync itemUpdated.");
+                item = o.item;
+                if(item.key === callsid) updateStatus(item);
             });
+            syncMap.on('itemAdded', function(o) {
+                console.log("Sync itemUpdated.");
+                item = o.item;
+                if(item.key === callsid) updateStatus(item);
+            });
+            syncMap.get(callsid).then(function(item) {
+                updateStatus(item);
+            })
+            .catch(function(error) {
+                console.log(error);
+            });
+
         })
         .catch(function(error) {
             console.log(error);
@@ -28,14 +62,20 @@ $(function() {
     });
 
     $('#btnClear').on('click', function() {
-        const value = {
-            bar  : 0,
-            PaymentCardNumber : "",
-            ExpirationDate    : "",
-            SecurityCode      : "",
-            Status            : "",
-        };
-        syncDoc.set(value);
+        syncMap.remove(callsid).then(function() {
+            console.log('item deleted',callsid);
+        });
+    });
+
+    $('#btnGuide').on('click', function() {
+        $.ajax({
+                url:'../pay-guide-start',
+                type:'POST',
+            })
+            .done( (data) => {
+                alert('Sending completed');
+            }
+        );
     });
 
 });

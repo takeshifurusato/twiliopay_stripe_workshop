@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Twilio Pay Status Page</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"></script>
+    <script src="https://media.twiliocdn.com/sdk/js/sync/releases/0.10.2/twilio-sync.min.js"></script>
+    <script src="./paystatus-list.js?version=1.1"></script>
+  </head>
+  <body>
+    <div class="container">
+        <h3>Twilio Pay Status List</h3>
+        <div id="callList" class="list-group" style="margin-bottom: 10px;">
+        </div>
+        <button id="btnSyncClear" type="button" class="btn btn-danger">SyncClear</button>
+    </div>
+  </body>
+</html>
