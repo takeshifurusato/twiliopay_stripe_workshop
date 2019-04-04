@@ -10,15 +10,17 @@ $(function() {
                 style = '';
                 if(item.value.Status === 'Error')     style='list-group-item-danger';
                 if(item.value.Status === 'Completed') style='list-group-item-success';
-                if(item.value.Status === 'Busy')      style='list-group-item-info';
 
                 if($('#'+item.key).length){
                     $('#'+item.key).removeClass('list-group-item-danger');
                     $('#'+item.key).removeClass('list-group-item-success');
                     $('#'+item.key).removeClass('list-group-item-info');
                     $('#'+item.key).addClass(style);
+                    $('#'+item.key+" .status").text(item.value.Status);
                 }else{
-                    status = '<a id="'+item.key+'"class="list-group-item '+style+'" href="./paystatus.html?callsid='+item.key+'">'+item.key+'</a>';
+                    status  = '<a id="'+item.key+'"class="list-group-item '+style+'" href="./paystatus.html?callsid='+item.key+'">'
+                    status += '(<span class="status">'+item.value.Status+'</span>)<br>'+item.key;
+                    status += '</a>';
                     $('#callList').append(status);                
                 }
                 console.log('show first item', i, item.key, item.value);                

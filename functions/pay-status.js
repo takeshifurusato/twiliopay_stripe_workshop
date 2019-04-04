@@ -6,7 +6,7 @@ exports.handler = function(context, event, callback) {
         'PaymentCardNumber' : event.PaymentCardNumber,
         'ExpirationDate'    : event.ExpirationDate,
         'SecurityCode'      : event.SecurityCode,
-        'Status'            : 'Busy',
+        'Status'            : event.For,
         'PhoneNumber'       : callsid,
     };
     let sync = Runtime.getSync({serviceName: context.PAY_SYNC_SERVICE_SID});
@@ -36,7 +36,7 @@ exports.handler = function(context, event, callback) {
             item.PaymentCardNumber = event.PaymentCardNumber;
             item.ExpirationDate    = event.ExpirationDate;
             item.SecurityCode      = event.SecurityCode;
-            item.Status            = 'Busy';
+            item.Status            = event.For;
             item.PhoneNumber       = callsid;
             return sync.maps('PayStatus').syncMapItems(callsid).update({
                 data: item
