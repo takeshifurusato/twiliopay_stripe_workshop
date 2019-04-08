@@ -33,7 +33,8 @@ exports.handler = function(context, event, callback) {
     let sync = Runtime.getSync({serviceName: context.PAY_SYNC_SERVICE_SID});
     console.log(`Maps created.`);
     sync.maps.create({
-        uniqueName: "PayStatus"
+        uniqueName: "PayStatus",
+        ttl: 1800
     })
     .then(response => {
         console.log(`Maps created.`);
@@ -51,7 +52,8 @@ exports.handler = function(context, event, callback) {
             item.Status            = status_text;
             item.PhoneNumber       = event.From;
             return sync.maps('PayStatus').syncMapItems(callsid).update({
-                data: item
+                data: item,
+                ttl: 1800
             });    
         })
         .then(response => {
@@ -60,8 +62,9 @@ exports.handler = function(context, event, callback) {
         })
         .catch(error => {
             return sync.maps('PayStatus').syncMapItems.create({
-               key: callsid,
-               data: payload
+                key: callsid,
+                data: payload,
+                ttl: 1800
             });
         })
         .then(response => {

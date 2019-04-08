@@ -13,7 +13,8 @@ exports.handler = function(context, event, callback) {
 
     console.log(`Maps created.`);
     sync.maps.create({
-        uniqueName: "PayStatus"
+        uniqueName: "PayStatus",
+        ttl: 1800
     })
     .then(response => {
         console.log(`Maps created.`);
@@ -39,7 +40,8 @@ exports.handler = function(context, event, callback) {
             item.Status            = event.For;
             item.PhoneNumber       = callsid;
             return sync.maps('PayStatus').syncMapItems(callsid).update({
-                data: item
+                data: item,
+                ttl: 1800
             });    
 
         })
@@ -49,8 +51,9 @@ exports.handler = function(context, event, callback) {
         })
         .catch(error => {
             return sync.maps('PayStatus').syncMapItems.create({
-               key: callsid,
-               data: payload
+                key: callsid,
+                data: payload,
+                ttl: 1800
             });
         })
         .then(response => {
