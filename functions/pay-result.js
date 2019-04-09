@@ -24,11 +24,12 @@ exports.handler = function(context, event, callback) {
     console.log(event);
     let callsid = event.CallSid;
     let payload = {
-        'PaymentCardNumber' : event.PaymentCardNumber,
-        'ExpirationDate'    : event.ExpirationDate,
-        'SecurityCode'      : event.SecurityCode,
-        'Status'            : status_text,
-        'PhoneNumber'       : event.From,
+        'PaymentCardNumber'         : event.PaymentCardNumber,
+        'ExpirationDate'            : event.ExpirationDate,
+        'SecurityCode'              : event.SecurityCode,
+        'Status'                    : status_text,
+        'PhoneNumber'               : event.From,
+        'PaymentConfirmationCode'   : event.PaymentConfirmationCode,
     };
     let sync = Runtime.getSync({serviceName: context.PAY_SYNC_SERVICE_SID});
     console.log(`Maps created.`);
@@ -46,11 +47,13 @@ exports.handler = function(context, event, callback) {
         sync.maps('PayStatus').syncMapItems(callsid).fetch()
         .then(item => {
             console.log(item);
-            item.PaymentCardNumber = event.PaymentCardNumber;
-            item.ExpirationDate    = event.ExpirationDate;
-            item.SecurityCode      = event.SecurityCode;
-            item.Status            = status_text;
-            item.PhoneNumber       = event.From;
+            item.PaymentCardNumber       = event.PaymentCardNumber;
+            item.ExpirationDate          = event.ExpirationDate;
+            item.SecurityCode            = event.SecurityCode;
+            item.Status                  = status_text;
+            item.PhoneNumber             = event.From;
+            item.PaymentConfirmationCode = event.PaymentConfirmationCode;
+
             return sync.maps('PayStatus').syncMapItems(callsid).update({
                 data: item,
                 ttl: 1800

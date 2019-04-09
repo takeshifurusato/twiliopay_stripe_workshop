@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
   <Say language="ja-JP" voice="Polly.Mizuki">こんにちは。クレジットカード決済にようこそ。料金は100円です。</Say>   
-  <Pay chargeAmount="100" currency='jpy' action="[stripe-result用FunctionのURL]" postalCode="false" paymentConnector="stripe_test" statusCallback="[pay-status用FunctionのURL]" >
+  <Pay chargeAmount="100" currency='jpy' action="[pay-result FunctionのURL]" postalCode="false" paymentConnector="stripe_test" statusCallback="[pay-status FunctionのURL]" >
     <Prompt for="payment-card-number">
       <Say language="ja-JP" voice="Polly.Mizuki">クレジットカード番号を入力してください。</Say>
     </Prompt>    

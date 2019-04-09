@@ -4,6 +4,7 @@ $(function() {
 
     var updateList = function () {
         console.log("updateList.");
+        console.log(syncMap);
         syncMap.getItems()
         .then(function(page) {
             $.each(page.items, function(i, item){
@@ -23,7 +24,7 @@ $(function() {
                     status += '</a>';
                     $('#callList').append(status);                
                 }
-                console.log('show first item', i, item.key, item.value);                
+                console.log('show item', i, item.key, item.value);                
             });
         });
     };
