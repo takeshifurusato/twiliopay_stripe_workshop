@@ -13,10 +13,14 @@ https://qiita.com/takeshifurusato/items/2fd5fc09ebaeca666677
 
 ## 設置・設定について
 ### Configuration
-Twilio管理コンソールからRuntime → Functions → 設定を選択、以下の内容を設定してください。  
-PAY_SYNC_SERVICE_SID=ISから始まるSyncサービスのSID  
-PAY_TWILIO_API_KEY=SKから始まるAPIキー  
-PAY_TWILIO_API_SECRET=APIキーとセットで設定されたSECRET  
+Twilio管理コンソールからRuntime → Functions → 設定を選択、以下の内容を設定してください。 
+ 
+|Key|Value|
+|:--|:--|
+|PAY_SYNC_SERVICE_SID|ISから始まるSyncサービスのSID|
+|PAY_TWILIO_API_KEY|SKから始まるAPIキー|
+|PAY_TWILIO_API_SECRET|APIキーとセットで設定されたSECRET|
+
 ※Enable ACCOUNT_SID and AUTH_TOKENにはチェックを入れておきます。
 
 ### Assets
